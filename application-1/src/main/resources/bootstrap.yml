@@ -1,0 +1,28 @@
+server:
+  port: ${port:56020} #端口支持参数注入
+  servlet:
+    context-path: /application-1
+spring:
+  application:
+    name: application-1
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true # Spring Boot 2.1 需要设置
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 583dedd0-240f-42b2-8ca7-b987303f0c55
+        group: NACOS-MICRO-SERVICE
+        file-extension: yml
+        refreshable-dataids: true
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 583dedd0-240f-42b2-8ca7-b987303f0c55
+        cluster-name: DEFAULT
+
+logging:
+  level:
+    root: info
+    org.springframework: info

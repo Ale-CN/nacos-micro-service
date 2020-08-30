@@ -1,0 +1,42 @@
+server:
+  port: ${port:56030} #端口支持参数注入
+
+spring:
+  application:
+    name: service-2
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true # Spring Boot 2.1 需要设置
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 583dedd0-240f-42b2-8ca7-b987303f0c55
+        group: NACOS-MICRO-SERVICE
+        file-extension: yml
+        refreshable-dataids: true
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 583dedd0-240f-42b2-8ca7-b987303f0c55
+        cluster-name: DEFAULT
+
+logging:
+  level:
+    root: info
+    org.springframework: info
+dubbo:
+  scan:
+    # 扫描的基准包@org.apache.dubbo.config.annotation.Service注解
+    base-packages: com.ale.nacos.service.impl
+  protocol:
+    # 协议
+    name: dubbo
+    # 协议端口
+    port: ${dubbo_port:20881}
+  registry:
+    address: nacos://127.0.0.1:8848
+  application:
+    qos-enable: false # dubbo运维服务是否开启
+  consumer:
+    check: false # 启动时就检查依赖服务
